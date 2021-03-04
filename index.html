@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="select-container"></div>
-    <div class="display-container"></div>
+    <div class="display-container" style="margin-top: 10px"></div>
     <script src="plugins/select.plugin.js"></script>
     <script src="plugins/display.plugin.js"></script>
     <script type="text/javascript">
@@ -100,8 +100,136 @@
         },
       ];
 
+      const displayData = [
+        {
+          id: 1,
+          title: "一号镇",
+          children: [
+            {
+              id: 10,
+              title: "一区",
+              children: [
+                {
+                  id: 100,
+                  title: "01号",
+                  leaf: true,
+                  lock: true,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+                {
+                  id: 101,
+                  title: "02号",
+                  leaf: true,
+                  lock: true,
+                  state: "RESERVED",
+                  price: "10000",
+                },
+                {
+                  id: 102,
+                  title: "03号",
+                  leaf: true,
+                  lock: true,
+                  state: "USED",
+                  price: "20000",
+                },
+                {
+                  id: 103,
+                  title: "04号",
+                  leaf: true,
+                  lock: false,
+                  state: "LEAVE",
+                  price: "20000",
+                },
+                {
+                  id: 104,
+                  title: "05号",
+                  leaf: true,
+                  lock: true,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+                {
+                  id: 105,
+                  title: "06号",
+                  leaf: true,
+                  lock: false,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+                {
+                  id: 106,
+                  title: "07号",
+                  leaf: true,
+                  lock: false,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+                {
+                  id: 107,
+                  title: "08号",
+                  leaf: true,
+                  lock: true,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+              ],
+            },
+            {
+              id: 11,
+              title: "二区",
+              children: [
+                {
+                  id: 108,
+                  title: "09号",
+                  leaf: true,
+                  lock: false,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+                {
+                  id: 109,
+                  title: "10号",
+                  leaf: true,
+                  lock: false,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+              ],
+            },
+            {
+              id: 12,
+              title: "三区",
+              children: [
+                {
+                  id: 110,
+                  title: "11号",
+                  leaf: true,
+                  lock: false,
+                  state: "UNSALE",
+                  price: "20000",
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
       $(".select-container").generateSelectArea(selectData, (data) => {
         console.log(data);
+      });
+
+      $(".display-container").generateDisplayArea(displayData, {
+        images: {
+          UNSALE: "/static/state-1.png",
+          RESERVED: "/static/state-2.png",
+          USED: "/static/state-3.png",
+          LEAVE: "/static/state-4.png",
+          LOCK: "/static/lock.png",
+        },
+        event: (type, data) => {
+          console.log(type, data);
+        },
       });
     </script>
   </body>

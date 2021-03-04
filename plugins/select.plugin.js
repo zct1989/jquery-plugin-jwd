@@ -1,116 +1,3 @@
-// 基础样式
-const styles = `
- .root-group{
-    border-bottom:solid 1px rgba(0,0,0,0.1);
-    padding:10px;
-  }
-
- .root-group .root-item.active::after{
-    content:' ';
-    height:4px;
-    width:25px;
-    border-radius:4px;
-    background:#0079FE;
-    display:block;
-    margin:auto;
-    margin-top:4px;
- }
-
- .root-item{
-   cursor:pointer;
-   padding:5px 10px;
-   margin: 0 10px;
-   font-size: 18px;
-   font-weight: bold;
- }
-
- .data-group{
-    display:flex;
-    align-items:center;
-    margin:5px;
-    border-bottom:solid 1px rgba(0,0,0,0.1);
-    padding:10px;
- }
- 
- .data-group .data-group-title{
-  min-width:80px;
-  letter-spacing:1em;
-  font-weight:bold;
-  color:#AFAFAF;
-  font-size:14px;
- }
-
- .data-group .data-group-title::after{
-    content:':'
- }
-
- .data-group .data-group-container{
-    display:flex;
- }
-
- .data-group .data-group-item{
-    cursor:pointer;
-    padding: 5px 10px;
-    margin: 0 10px;
-    font-size: 14px;
-    font-weight: bold;
-    min-width:50px;
-    text-align:center;
- }
-
- .data-group .data-group-item.active{
-    background:#0079FE;
-    color:#fff;
-    border-radius:40px;
- }
-
- .current-group{
-    display:flex;
-    align-items:center;
-    margin:5px;
-    border-bottom:solid 1px rgba(0,0,0,0.1);
-    padding:10px;
- }
- 
- .current-group .group-title{
-  min-width:80px;
-  font-weight:bold;
-  color:#AFAFAF;
-  font-size:14px;
- }
-
- .current-group .group-title::after{
-    content:':';
-    padding-left:1em;
- }
-
- .current-group .group-container{
-    display:flex;
- }
-
- .current-group .current-group-item{
-    padding: 5px 10px;
-    padding-right:15px;
-    margin: 0 10px;
-    font-size: 14px;
-    font-weight: bold;
-    min-width:60px;
-    text-align:center;
-    border-radius:50px;
-    border:solid 1px #0079FE;
-    color:#0079FE;
-    position:relative;
- }
-
- .current-group .current-group-item .current-group-close{
-    cursor:pointer;
-    position:absolute;
-    right:4px;
-    top:-1px;
-    padding:5px;
-  }
-`;
-
 function SelectArea(data, onChange) {
   this.$data = data;
   this.$value = [];
@@ -328,23 +215,137 @@ SelectArea.prototype.generateGroupItem = function (item, active, level) {
   return node;
 };
 
-// 选择区域生成插件
-// params:
-//    container- 生成容器
-//    data: 显示数据
-//    onChange : 数据修改回调
-$.fn.generateSelectArea = function (data, onChange) {
-  var selectArea = new SelectArea(data, onChange);
-  this.html(selectArea.render());
-};
+(function ($) {
+  // 基础样式
+  const styles = `
+ .root-group{
+    border-bottom:solid 1px rgba(0,0,0,0.1);
+    padding:10px;
+  }
 
-// 安装组件样式
-function installComponetStyle() {
-  var textNode = document.createTextNode(styles);
-  var style = document.createElement("style");
-  style.type = "text/css";
-  style.appendChild(textNode);
-  document.head.appendChild(style);
-}
+ .root-group .root-item.active::after{
+    content:' ';
+    height:4px;
+    width:25px;
+    border-radius:4px;
+    background:#0079FE;
+    display:block;
+    margin:auto;
+    margin-top:4px;
+ }
 
-installComponetStyle();
+ .root-item{
+   cursor:pointer;
+   padding:5px 10px;
+   margin: 0 10px;
+   font-size: 18px;
+   font-weight: bold;
+ }
+
+ .data-group{
+    display:flex;
+    align-items:center;
+    margin:5px;
+    border-bottom:solid 1px rgba(0,0,0,0.1);
+    padding:10px;
+ }
+ 
+ .data-group .data-group-title{
+  min-width:80px;
+  letter-spacing:1em;
+  font-weight:bold;
+  color:#AFAFAF;
+  font-size:14px;
+ }
+
+ .data-group .data-group-title::after{
+    content:':'
+ }
+
+ .data-group .data-group-container{
+    display:flex;
+ }
+
+ .data-group .data-group-item{
+    cursor:pointer;
+    padding: 5px 10px;
+    margin: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    min-width:50px;
+    text-align:center;
+ }
+
+ .data-group .data-group-item.active{
+    background:#0079FE;
+    color:#fff;
+    border-radius:40px;
+ }
+
+ .current-group{
+    display:flex;
+    align-items:center;
+    margin:5px;
+    border-bottom:solid 1px rgba(0,0,0,0.1);
+    padding:10px;
+ }
+ 
+ .current-group .group-title{
+  min-width:80px;
+  font-weight:bold;
+  color:#AFAFAF;
+  font-size:14px;
+ }
+
+ .current-group .group-title::after{
+    content:':';
+    padding-left:1em;
+ }
+
+ .current-group .group-container{
+    display:flex;
+ }
+
+ .current-group .current-group-item{
+    padding: 5px 10px;
+    padding-right:15px;
+    margin: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    min-width:60px;
+    text-align:center;
+    border-radius:50px;
+    border:solid 1px #0079FE;
+    color:#0079FE;
+    position:relative;
+ }
+
+ .current-group .current-group-item .current-group-close{
+    cursor:pointer;
+    position:absolute;
+    right:4px;
+    top:-1px;
+    padding:5px;
+  }
+`;
+  // 选择区域生成插件
+  // params:
+  //    container- 生成容器
+  //    data: 显示数据
+  //    onChange : 数据修改回调
+  $.fn.generateSelectArea = function (data, onChange) {
+    var selectArea = new SelectArea(data, onChange);
+    this.html(selectArea.render());
+  };
+
+  // 安装组件样式
+  function installComponetStyle() {
+    var textNode = document.createTextNode(styles);
+    var style = document.createElement("style");
+    style.type = "text/css";
+    style.appendChild(textNode);
+    document.head.appendChild(style);
+  }
+
+  installComponetStyle();
+})(jQuery);
