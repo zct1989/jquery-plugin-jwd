@@ -48,7 +48,20 @@ DisplayArea.prototype.render = function () {
 };
 
 DisplayArea.prototype.generateAction = function () {
-  const container = $(`<div class="display-group-action"></div>`);
+  const container = $(`<div class="display-group-tool"></div>`);
+  const actionContainer = $(`<div class="display-group-action"></div>`);
+  const stateContainer = $(`<div class="display-group-state">
+      <div class="state-icon unsale"></div>
+      <div class="state-text unsale">未售</div>
+      <div class="state-icon reserved"></div>
+      <div class="state-text reserved">已预定</div>
+      <div class="state-icon used"></div>
+      <div class="state-text used">已下葬</div>
+      <div class="state-icon leave"></div>
+      <div class="state-text leave">已迁出</div>
+    </div>`);
+
+  container.append(actionContainer, stateContainer);
 
   const checkbox = $(
     `<input type="checkbox" id="display-all-selection" class="all-selection-checkbox" />`
@@ -66,11 +79,11 @@ DisplayArea.prototype.generateAction = function () {
   const lockAction = $(`<div class="update-action action-button">锁定</div>`);
   const unlockAction = $(`<div class="update-action action-button">解锁</div>`);
 
-  container.append(checkbox, label);
-  container.append(updateAction);
-  container.append(deleteAction);
-  container.append(lockAction);
-  container.append(unlockAction);
+  actionContainer.append(checkbox, label);
+  actionContainer.append(updateAction);
+  actionContainer.append(deleteAction);
+  actionContainer.append(lockAction);
+  actionContainer.append(unlockAction);
 
   checkbox.change((e) => {
     const checked = e.target.checked;
@@ -257,6 +270,11 @@ DisplayArea.prototype.generateGroupItem = function (data) {
       color:rgba(0,0,0,0.9);
     }
 
+    .display-group-tool{
+      display:flex;
+      justify-content:space-between;
+    }
+
     .display-group-action{
       border-bottom:solid 1px rgba(0,0,0,0.1);
       padding:10px;
@@ -283,6 +301,44 @@ DisplayArea.prototype.generateGroupItem = function (data) {
       background-color:#00A9FE;
     }
 
+    .display-group-state{
+      margin:auto 0;
+      display:flex;
+      align-items:center;
+    }
+
+    .display-group-state .state-icon,.state-text{
+      font-size:12px;
+    }
+
+    .display-group-state .state-icon{
+      border-radius:100%;
+      width:15px;
+      height:15px;
+      background-color:red;
+      margin:5px;
+    }
+
+    .display-group-state .state-text{
+
+      margin-right:10px;
+    }
+
+    .display-group-state .state-icon.unsale{
+      background-color:#0079FE;
+    }
+
+    .display-group-state .state-icon.reserved{
+      background-color:#FFB444;
+    }
+
+    .display-group-state .state-icon.used{
+      background-color:#FA725D;
+    }
+
+    .display-group-state .state-icon.leave{
+      background-color:#CDCDCD;
+    }
   `;
   // 选择区域生成插件
   // params:
