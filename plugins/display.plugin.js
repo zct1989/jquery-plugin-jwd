@@ -241,8 +241,9 @@ DisplayArea.prototype.generateGroupItem = function (data) {
     }
 
     .display-group .display-group-container .display-group-item.active{
-      background-color:#00AAEE;
-      }
+      background-color: #dbecff;
+      border: 1px solid #0079FE;
+    }
 
     .display-group .display-group-container .display-group-item .state-icon{
       width:32px;
