@@ -34,7 +34,7 @@ DisplayArea.prototype.render = function () {
     action([], x);
   });
 
-  const children = list.reduce((result, item) => {
+  const groups = list.reduce((result, item) => {
     let target = result.find((x) => x.parent === item.parent);
     if (!target) {
       target = {
@@ -49,13 +49,14 @@ DisplayArea.prototype.render = function () {
     return result;
   }, []);
 
-  const nodes = children.map((node) => {
-    const container = node.children(".display-group-container");
-    container.append(children);
-
-    if (data.children.some((x) => x.leaf)) {
-      container.addClass("leaf-container");
-    }
+  groups.forEach((node) => {
+    const group = this.generateGroup(node.parent);
+    const container = group.children(".display-group-container");
+    node.children.forEach((data) => {
+      const item = this.generateGroupItem(data.data);
+      container.append(item);
+    });
+    this.$element.push(group);
   });
 
   return this.$element;
@@ -103,9 +104,9 @@ DisplayArea.prototype.generateAction = function () {
     const checked = e.target.checked;
 
     if (checked) {
-      const items = $(".display-group-container .display-group-item").not(
-        ".active"
-      );
+      const items = $(
+        ".display-groontainer .display/-tform/xbt-platform-dingtalk-web.gitgroup-item"
+      ).not(".active");
 
       items.each((index) => {
         const node = $(items[index]);
@@ -167,12 +168,12 @@ DisplayArea.prototype.generateAction = function () {
   return container;
 };
 
-DisplayArea.prototype.generateGroup = function (data) {
+DisplayArea.prototype.generateGroup = function (title) {
   const group = $('<div class="display-group"></div>');
   const groupTitle = $('<div class="display-group-title"></div>');
   const groupContainer = $('<div class="display-group-container"></div>');
 
-  groupTitle.text(data.title);
+  groupTitle.text(title);
 
   group.append(groupTitle, groupContainer);
 
@@ -224,7 +225,7 @@ DisplayArea.prototype.generateGroupItem = function (data) {
       margin-left:1.5em;
     }
 
-    .display-group .display-group-container.leaf-container{
+    .display-group .display-group-container{
       display:flex;
       flex-direction:row;
       flex-wrap:wrap;
