@@ -7,6 +7,7 @@ function DisplayArea(data, options) {
 DisplayArea.prototype.render = function () {
   this.$element = [];
   this.$value = [];
+  const list = [];
 
   this.$emit = function (type) {
     if (this.$options.event) {
@@ -17,31 +18,44 @@ DisplayArea.prototype.render = function () {
   const tool = this.generateAction();
   this.$element.push(tool);
 
-  const action = (data) => {
-    let node;
-
-    if (!data.leaf) {
-      node = this.generateGroup(data);
-    } else {
-      node = this.generateGroupItem(data);
+  const action = (parent, data) => {
+    if (data.leaf) {
+      list.push({ parent: parent.join("/"), data });
     }
 
     if (data.children) {
-      const children = data.children.map((x) => action(x));
-      const container = node.children(".display-group-container");
-      container.append(children);
-
-      if (data.children.some((x) => x.leaf)) {
-        container.addClass("leaf-container");
-      }
+      const p = Object.assign([], parent);
+      p.push(data.title);
+      data.children.map((x) => action(p, x));
     }
-
-    return node;
   };
 
   this.$data.forEach((x) => {
-    let node = action(x);
-    this.$element.push(node);
+    action([], x);
+  });
+
+  const children = list.reduce((result, item) => {
+    let target = result.find((x) => x.parent === item.parent);
+    if (!target) {
+      target = {
+        parent: item.parent,
+        children: [],
+      };
+
+      result.push(target);
+    }
+
+    target.children.push(item);
+    return result;
+  }, []);
+
+  const nodes = children.map((node) => {
+    const container = node.children(".display-group-container");
+    container.append(children);
+
+    if (data.children.some((x) => x.leaf)) {
+      container.addClass("leaf-container");
+    }
   });
 
   return this.$element;
